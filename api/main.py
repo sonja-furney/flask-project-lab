@@ -5,14 +5,14 @@ from api.settings import DB_NAME, user
 app = Flask(__name__)
 
 app.config.from_mapping(
-    DATABASE= dog_names
+    DATABASE= DB_NAME
 )
 
-@app.route('/venues')
-def venues():
+@app.route('/')
+def all_dog_names():
     conn = psycopg2.connect(database = DB_NAME, user = user)
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM venues;')
+    cursor.execute('SELECT * FROM anchorage_dog_names;')
     venues = cursor.fetchall()
     venue_objs = [Venue(venue).__dict__ for venue in venues]
     return jsonify(venue_objs)
